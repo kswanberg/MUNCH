@@ -23,7 +23,7 @@ MUNCH outputs into the working directory (typically the folder in which the scri
 
 Work that employed code from MUNCH can cite it as follows: 
 
-Swanberg, K.M. (2024). MUNCH: Masking Under Not Cropping Helper v. 1.0. Source code. https://github.com/kswanberg/MUNCH.
+Swanberg, K.M. (2024). MUNCH: Masking Under Needless Contrast Helper v. 1.0. Source code. https://github.com/kswanberg/MUNCH.
 
 
 ### Developer
