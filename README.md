@@ -1,6 +1,6 @@
-# MUNCH: Masking Under Not Cropping Helper
+# MUNCH: Masking Under Needless Contrast Helper
 
-MUNCH (Masking Under Not Cropping Helper) automatically detects moderately sized contiguous 2D signals starting from the edges of images and replaces their offending rows and columns with background noise. The original use case for  MUNCH was removing nearby brain slices from 2-channel confocal microscopy images targeting a single center slice, but this tool can be employed out-of-box for any two-channel TIFF files for which unwanted 2D signals appear from the edges, as well as further adapted to a wider range of applications.  
+MUNCH (Masking Under Needless Contrast Helper) automatically detects moderately sized contiguous 2D signals starting from the edges of images and replaces their offending rows and columns with background noise. The original use case for  MUNCH was removing nearby brain slices from 2-channel confocal microscopy images targeting a single center slice, but this tool can be employed out-of-box for any two-channel TIFF files for which unwanted 2D signals appear from the edges, as well as further adapted to a wider range of applications.  
 
 
 ### Inputs

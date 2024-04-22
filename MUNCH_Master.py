@@ -28,11 +28,11 @@ def MUNCH_Master():
                 ██╔████╔██║██║   ██║██╔██╗ ██║██║     ███████║
                 ██║╚██╔╝██║██║   ██║██║╚██╗██║██║     ██╔══██║
                 ██║ ╚═╝ ██║╚██████╔╝██║ ╚████║╚██████╗██║  ██║
-                ╚═╝     ╚═╝ ╚═════╝ ╚═╝  ╚═══╝ ╚═════╝╚═╝  ╚═╝ Masking Under Not Cropping Helper \n""")
+                ╚═╝     ╚═╝ ╚═════╝ ╚═╝  ╚═══╝ ╚═════╝╚═╝  ╚═╝ Masking Under Needless Contrast Helper \n""")
 
      # Provide initial instructions to the new user 
     print("""
-           Welcome to MUNCH (pronounced "moonk"), your solution for batch microscopy image cropping! This tool finds unwanted large tissue fragments on the edges of your images
+           Welcome to MUNCH (pronounced "MON-ke"), your solution for batch microscopy image cropping! This tool finds unwanted large tissue fragments on the edges of your images
            and replaces them with randomized background pixels. Note that this tool is not designed to work on images in which tissue fragments are large enough to encroach on the 2D coordinates
            values of your central microscopy targets. \n""") 
     print('Please select the directory of images to be munched! Images are currently expected to be 2-channel TIFFs. \n') 
