@@ -33,7 +33,7 @@ def MUNCH_Master():
      # Provide initial instructions to the new user 
     print("""
            Welcome to MUNCH (pronounced "MON-ke"), your solution for batch microscopy image cropping! This tool finds unwanted large tissue fragments on the edges of your images
-           and replaces them with randomized background pixels. Note that this tool is not designed to work on images in which tissue fragments are large enough to encroach on the 2D coordinate
+           and replaces them with randomized background pixels. Note that this tool is not designed to work on images in which tissue fragments are large enough to encroach on the 2D coordinates
            values of your central microscopy targets. \n""") 
     print('Please select the directory of images to be munched! Images are currently expected to be 2-channel TIFFs. \n') 
 
@@ -63,9 +63,6 @@ def MUNCH_Master():
     zero_image_margin_coeff = 0.10; 
     munch_margin_coeff = 0.015; 
     threshold_coeff = 0.6; 
-    ref_channel = 0; 
-    background_threshold = 7; 
-    background_threshold_comparator = background_threshold + 1; 
 
     for kk in range(num_files): 
 
@@ -102,9 +99,6 @@ def MUNCH_Master():
         left_right_munch_margin = round(munch_margin_coeff*image_pre_munch_dim[1]); 
         top_bottom_munch_margin = round(munch_margin_coeff*image_pre_munch_dim[0]); 
 
-        analysis_num = kk+1; 
-        print('######### ANALYSIS', analysis_num, ' OF ', num_files,' #########'); 
-
         # Walk through image columns from the left 
         for ii in range(10, image_pre_munch_dim[1], 1):
 
@@ -113,17 +107,17 @@ def MUNCH_Master():
                 # Walk down each column from the top
                 for jj in range(image_pre_munch_dim[0]):
 
-                    current = copy.deepcopy(image_pre_munch[jj, ii, ref_channel]);
+                    current = copy.deepcopy(image_pre_munch[jj, ii, 0]);
                 
                     if munchcounter > highest_munchcounter:
                         highest_munchcounter = copy.deepcopy(munchcounter);
                     
-                    if current > background_threshold: 
-                        if munchcounter == 0 and comparator < background_threshold_comparator:
+                    if current > 2: 
+                        if munchcounter == 0 and comparator < 3:
                             comparator = copy.deepcopy(current); 
                             munchcounter = 1; 
                         else: 
-                            if comparator > background_threshold:
+                            if comparator > 2:
                                 comparator = copy.deepcopy(current); 
                                 munchcounter = munchcounter + 1;
                     else:
@@ -165,17 +159,17 @@ def MUNCH_Master():
                 # Start from the top
                 for jj in range(image_pre_munch_dim[0]):
 
-                    current = copy.deepcopy(image_pre_munch[jj, ii, ref_channel]);
+                    current = copy.deepcopy(image_pre_munch[jj, ii, 0]);
                 
                     if munchcounter > highest_munchcounter:
                         highest_munchcounter = copy.deepcopy(munchcounter);
                     
-                    if current > background_threshold: 
-                        if munchcounter == 0 and comparator < background_threshold_comparator:
+                    if current > 2: 
+                        if munchcounter == 0 and comparator < 3:
                             comparator = copy.deepcopy(current); 
                             munchcounter = 1; 
                         else: 
-                            if comparator > background_threshold:
+                            if comparator > 2:
                                 comparator = copy.deepcopy(current); 
                                 munchcounter = munchcounter + 1;
                     else:
@@ -217,17 +211,17 @@ def MUNCH_Master():
                 # Start from the left
                 for jj in range(image_pre_munch_dim[1]):
 
-                    current = copy.deepcopy(image_pre_munch[ii, jj, ref_channel]);
+                    current = copy.deepcopy(image_pre_munch[ii, jj, 0]);
                 
                     if munchcounter > highest_munchcounter:
                         highest_munchcounter = copy.deepcopy(munchcounter);
                     
-                    if current > background_threshold: 
-                        if munchcounter == 0 and comparator < background_threshold_comparator:
+                    if current > 2: 
+                        if munchcounter == 0 and comparator < 3:
                             comparator = copy.deepcopy(current); 
                             munchcounter = 1; 
                         else: 
-                            if comparator > background_threshold:
+                            if comparator > 2:
                                 comparator = copy.deepcopy(current); 
                                 munchcounter = munchcounter + 1;
                     else:
@@ -269,17 +263,17 @@ def MUNCH_Master():
                 # Start from the left
                 for jj in range(image_pre_munch_dim[1]):
 
-                    current = copy.deepcopy(image_pre_munch[ii, jj, ref_channel]);
+                    current = copy.deepcopy(image_pre_munch[ii, jj, 0]);
                 
                     if munchcounter > highest_munchcounter:
                         highest_munchcounter = copy.deepcopy(munchcounter);
                     
-                    if current > background_threshold: 
-                        if munchcounter == 0 and comparator < background_threshold_comparator:
+                    if current > 2: 
+                        if munchcounter == 0 and comparator < 3:
                             comparator = copy.deepcopy(current); 
                             munchcounter = 1; 
                         else: 
-                            if comparator > background_threshold:
+                            if comparator > 2:
                                 comparator = copy.deepcopy(current); 
                                 munchcounter = munchcounter + 1;
                     else:
@@ -361,15 +355,10 @@ def MUNCH_Master():
 
         image_munched_difference = image_munched_multich_new[0, :, :] - image_pre_munch_multich[0, :, :]; 
 
-        # Replace offending characters in filename
-        image_to_eat_filename_noext_string = image_to_eat_filename_noext[0]; 
-        image_to_eat_filename_noext_string_clean = image_to_eat_filename_noext_string.replace('#', '_'); 
-        image_to_eat_filename_noext_string_clean = image_to_eat_filename_noext_string_clean.replace(' ', ''); 
-
-        image_munched_difference_filename = '%s/00_diff_mnchd_%s.tif' % (root_dirname, image_to_eat_filename_noext_string_clean); 
-        image_munched_nosplit_filename = '%s/01_mnchd_nosplt_%s.tif' % (root_dirname, image_to_eat_filename_noext_string_clean); 
-        image_munched_split_ch0_filename = '%s/02a_mnchd_splt_ch0_%s.tif' % (root_dirname, image_to_eat_filename_noext_string_clean); 
-        image_munched_split_ch1_filename = '%s/02b_mnchd_splt_ch1_%s.tif' % (root_dirname, image_to_eat_filename_noext_string_clean); 
+        image_munched_difference_filename = '%s/00_diff_mnchd_%s.tif' % (root_dirname, image_to_eat_filename_noext[0]); 
+        image_munched_nosplit_filename = '%s/01_mnchd_nosplt_%s.tif' % (root_dirname, image_to_eat_filename_noext[0]); 
+        image_munched_split_ch0_filename = '%s/02a_mnchd_splt_ch0_%s.tif' % (root_dirname, image_to_eat_filename_noext[0]); 
+        image_munched_split_ch1_filename = '%s/02b_mnchd_splt_ch1_%s.tif' % (root_dirname, image_to_eat_filename_noext[0]); 
 
         imwrite(image_munched_difference_filename, image_munched_difference, imagej=True); 
         imwrite(image_munched_nosplit_filename, image_munched_multich_new, imagej=True);  
